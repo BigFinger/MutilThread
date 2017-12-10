@@ -24,7 +24,7 @@ unsigned int _stdcall BeginThreadRun(PVOID pM){
 unsigned int _stdcall CountThreadRun(void* arg){
 	int number = *(int*)arg;
 	int count = *((char*)arg + sizeof(int));
-	printf("线程%d启动，计数:%d\n", &number, &count);
+	printf("线程%d启动，计数:%d\n", number, count);
 	return 0;
 }
 
@@ -40,9 +40,12 @@ int main(){
 	HANDLE countHandle[10];
 	for (int i = 0; i < 10; i++)
 	{
+		g_count++;
 		memset(arg, 0, sizeof(char) * 10);
 		memcpy(arg, &i, sizeof(int));
-		memcpy(arg + sizeof(int), &g_count, sizeof(int));
+		memcpy(arg + sizeof(int), &(g_count), sizeof(int));
+		int number = *(int*)arg;
+		int count = *((char*)arg + sizeof(int));
 		countHandle[i] = (HANDLE)_beginthreadex(NULL, 0, CountThreadRun, arg, 0, NULL);
 	}
 	WaitForMultipleObjects(10, countHandle, TRUE, INFINITE);
