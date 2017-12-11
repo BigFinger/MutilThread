@@ -33,7 +33,11 @@ int main(){
         threadHandle[i] = (HANDLE)_beginthreadex(NULL, 0, ThreadRun,&i, true, NULL);
     }
     WaitForMultipleObjects(threadNum, threadHandle, true, INFINITE);
-    delete[] threadHandle;
+    for(int i = 0; i < threadNum; i++)
+	{
+		CloseHandle(threadHandle[i]);
+	}
+	delete[] threadHandle;
     threadHandle = NULL;
     DeleteCriticalSection(&g_MainThreadSection);
     DeleteCriticalSection(&g_SubThreadSection);

@@ -49,6 +49,10 @@ int main(){
 		countHandle[i] = (HANDLE)_beginthreadex(NULL, 0, CountThreadRun, arg, 0, NULL);
 	}
 	WaitForMultipleObjects(10, countHandle, TRUE, INFINITE);
+	for(int i = 0; i < threadNum; i++)
+	{
+		CloseHandle(countHandle[i]);
+	}
 	getchar();
 	return 0;
 }
