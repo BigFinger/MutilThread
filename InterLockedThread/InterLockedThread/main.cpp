@@ -38,7 +38,10 @@ int main(){
         WaitForMultipleObjects(threadNum, threadHandle, true, INFINITE);
         std::cout<<"登录的总次数: "<<g_count<<std::endl;
     }
-
+	for(int i = 0; i < threadNum; i++)
+	{
+		CloseHandle(threadHandle[i]);
+	}
     getchar();
     return 0;
 }
